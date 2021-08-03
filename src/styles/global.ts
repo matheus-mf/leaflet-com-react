@@ -4,20 +4,21 @@ export default createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     outline: 0;
+    box-sizing: border-box;
   }
 
   body {
     background-color: #FFF;
-    color: #000000DE;
+    color: #000;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
   body, input, button, textarea {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: Nunito, sans-serif;
     font-size: 16px;
+    font-weight: 600;
   }
 
   h1, h2, h3, h4, h5, strong {
