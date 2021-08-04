@@ -1,10 +1,12 @@
-export interface IPopupData {
+export interface IMarkerData {
   id: string;
   name: string;
   address: string;
   complement: string;
   latitude: number;
   longitude: number;
+  color: string;
+  radius: number;
 }
 
 export type IPosition = {
@@ -19,14 +21,14 @@ export type ILocation = {
 
 export interface IMap {
   position: IPosition | null;
-  popupData: Array<IPopupData>;
+  markerData: Array<IMarkerData>;
   location: ILocation;
 }
 
 export interface IMapContextData {
   initMap(data: IMap): void;
   setPosition(position: IPosition | null): void;
-  setPopupData(deliveries: Array<IPopupData>): void;
+  setMarkerData(deliveries: Array<IMarkerData>): void;
   setLocation(data: ILocation): void;
   dataMap: IMap;
 }

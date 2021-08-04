@@ -10,9 +10,9 @@ import { useMap } from '../../hooks/map';
 import { Container } from './styles';
 
 const Form: React.FC = () => {
-  const { dataMap, setPopupData, setPosition, setLocation } = useMap();
+  const { dataMap, setMarkerData, setPosition, setLocation } = useMap();
 
-  const { popupData, location } = dataMap;
+  const { markerData, location } = dataMap;
 
   const [name, setName] = useState('');
   const [complement, setComplement] = useState('');
@@ -20,12 +20,14 @@ const Form: React.FC = () => {
     label: string;
     value: string;
   } | null>(null);
+  const [color, setColor] = useState('#ff0000');
+  const [radius, setRadius] = useState(20);
 
   const loadOptions = useCallback(
     async (inputValue: string, callback: (options: any) => void) => {
       const response = await fetchLocalMapBox(inputValue);
       const places: any = [];
-      if (inputValue.length < 5) return;
+      if (inputValue.length < 5) return [];
       response.features.forEach((item: any) => {
         places.push({
           label: item.place_name,
@@ -36,7 +38,7 @@ const Form: React.FC = () => {
       });
 
       callback(places);
-      // eslint-disable-next-line consistent-return
+
       return places;
     },
     [],
@@ -65,8 +67,8 @@ const Form: React.FC = () => {
 
       if (!address || !name) return;
 
-      setPopupData([
-        ...popupData,
+      setMarkerData([
+        ...markerData,
         {
           id: uuidV4(),
           name,
@@ -74,6 +76,8 @@ const Form: React.FC = () => {
           complement,
           latitude: location.lat,
           longitude: location.lng,
+          color,
+          radius,
         },
       ]);
 
@@ -82,7 +86,17 @@ const Form: React.FC = () => {
       setComplement('');
       setPosition(null);
     },
-    [setPopupData, popupData, name, address, complement, location, setPosition],
+    [
+      setMarkerData,
+      markerData,
+      name,
+      address,
+      complement,
+      location,
+      setPosition,
+      color,
+      radius,
+    ],
   );
 
   return (
@@ -121,6 +135,27 @@ const Form: React.FC = () => {
             id="complement"
             value={complement}
             onChange={event => setComplement(event.target.value)}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="color">Cor</label>
+          <input
+            id="color"
+            type="color"
+            value={color}
+            onChange={event => setColor(event.target.value)}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="radius">Raio do círculo</label>
+          <input
+            id="radius"
+            type="number"
+            value={radius}
+            min="1"
+            onChange={event => setRadius(Number(event.target.value))}
           />
         </div>
       </fieldset>

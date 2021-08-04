@@ -2,22 +2,14 @@ import 'leaflet/dist/leaflet.css';
 
 import React from 'react';
 
-import { TileLayer, Marker, Popup } from 'react-leaflet';
+import { TileLayer, CircleMarker, Marker, Popup } from 'react-leaflet';
 import Leaflet from 'leaflet';
 
 import mapPin from '../../assets/pin.svg';
-import mapPackage from '../../assets/package.svg';
 
 import { useMap } from '../../hooks/map';
 
 import { Container } from './styles';
-
-const mapPackageIcon = Leaflet.icon({
-  iconUrl: mapPackage,
-  iconSize: [58, 68],
-  iconAnchor: [29, 68],
-  popupAnchor: [170, 2],
-});
 
 const mapPinIcon = Leaflet.icon({
   iconUrl: mapPin,
@@ -29,10 +21,10 @@ const mapPinIcon = Leaflet.icon({
 const Map: React.FC = () => {
   const { dataMap } = useMap();
 
-  const { popupData, position, location } = dataMap;
+  const { markerData, position, location } = dataMap;
 
   return (
-    <Container center={location} zoom={15}>
+    <Container center={location} zoom={5}>
       <TileLayer
         url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_ACCESS_TOKEN_MAP_BOX}`}
       />
@@ -44,11 +36,12 @@ const Map: React.FC = () => {
         />
       )}
 
-      {popupData.map(data => (
-        <Marker
+      {markerData.map(data => (
+        <CircleMarker
           key={data.id}
-          icon={mapPackageIcon}
-          position={[data.latitude, data.longitude]}
+          center={[data.latitude, data.longitude]}
+          pathOptions={{ color: data.color }}
+          radius={data.radius}
         >
           <Popup
             closeButton={false}
@@ -63,7 +56,7 @@ const Map: React.FC = () => {
               </p>
             </div>
           </Popup>
-        </Marker>
+        </CircleMarker>
       ))}
     </Container>
   );
