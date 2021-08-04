@@ -102,7 +102,7 @@ const Form: React.FC = () => {
   return (
     <Container onSubmit={handleSubmit}>
       <fieldset>
-        <legend>Entregas</legend>
+        <legend>Leaflet + Mapbox</legend>
 
         <div>
           <label htmlFor="name">Nome</label>
