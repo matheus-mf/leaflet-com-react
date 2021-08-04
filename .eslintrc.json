@@ -27,6 +27,7 @@
     "import/prefer-default-export": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
     "react/jsx-filename-extension": [
       1,
       {
@@ -52,6 +53,16 @@
           "regex": "^I[A-Z]",
           "match": true
         }
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "labelComponents": [],
+        "labelAttributes": [],
+        "controlComponents": [],
+        "assert": "either",
+        "depth": 25
       }
     ],
     "no-use-before-define": "off",
